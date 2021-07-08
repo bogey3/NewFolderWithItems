@@ -1,8 +1,8 @@
 package main
 
 import (
+	"fmt"
 	"os"
-	"strconv"
 	"strings"
 )
 
@@ -10,12 +10,10 @@ func main(){
 	files := os.Args[1:]
 	baseFolderName := "New folder with items"
 	folderName := baseFolderName
-	index := 0
 	_, err := os.Stat(folderName)
-	for !os.IsNotExist(err){
-		index ++
-		folderName = baseFolderName + " (" + strconv.Itoa(index) + ")"
-		_, err = os.Stat(folderName)
+	for index := 1; !os.IsNotExist(err); index++ {
+		folderName = fmt.Sprintf("%s (%d)", baseFolderName, index)
+		_,err = os.Stat(folderName)
 	}
 	os.Mkdir(folderName, os.ModeDir)
 	for _, file := range files {
@@ -24,5 +22,4 @@ func main(){
 		os.Rename(file, folderName + string(os.PathSeparator) + filename)
 
 	}
-
 }
