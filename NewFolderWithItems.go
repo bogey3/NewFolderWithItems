@@ -8,6 +8,9 @@ import (
 
 func main(){
 	files := os.Args[1:]
+	if len(files) == 0 {
+		os.Exit(1)
+	}
 	baseFolderName := "New folder with items"
 	folderName := baseFolderName
 	_, err := os.Stat(folderName)
