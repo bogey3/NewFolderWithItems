@@ -21,10 +21,6 @@ func main(){
 	}
 	os.Mkdir(folderName, os.ModeDir)
 	for _, file := range files {
-		if strings.Contains(file, pathSep){
-			os.Rename(file, folderName + pathSep + file[strings.LastIndex(file, pathSep)+1:])
-		}else{
-			os.Rename(file, folderName + pathSep + file)
-		}
+		os.Rename(file, folderName + pathSep + file[strings.LastIndex(file, pathSep)+1:])
 	}
 }
