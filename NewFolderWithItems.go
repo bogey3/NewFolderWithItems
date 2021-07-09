@@ -8,6 +8,7 @@ import (
 
 func main(){
 	files := os.Args[1:]
+	pathSep := string(os.PathSeparator)
 	if len(files) == 0 {
 		os.Exit(1)
 	}
@@ -20,9 +21,10 @@ func main(){
 	}
 	os.Mkdir(folderName, os.ModeDir)
 	for _, file := range files {
-		filePathSplit := strings.Split(file, string(os.PathSeparator))
-		filename := filePathSplit[len(filePathSplit)-1]
-		os.Rename(file, folderName + string(os.PathSeparator) + filename)
-
+		if strings.Contains(file, pathSep){
+			os.Rename(file, folderName + pathSep + file[strings.LastIndex(file, pathSep)+1:])
+		}else{
+			os.Rename(file, folderName + pathSep + file)
+		}
 	}
 }
